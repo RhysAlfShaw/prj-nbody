@@ -1,47 +1,46 @@
 import numpy as np
+import multiprocessing as mp
 import matplotlib.pyplot as plt
 from tqdm import tqdm
+
+def calculate_acceleration_chunk(args):
+    """
+    Calculates the gravitational acceleration on a chunk of particles.
+    """
+    r, m, start, end, G = args
+    a = np.zeros((end - start, 3))
+    for i in range(start, end):
+        for j in range(len(r)):
+            if i != j:
+                dr = r[j] - r[i]
+                dist = np.linalg.norm(dr)
+                a[i - start] += -G * m[j] * dr / (dist ** 3)
+    return a
 
 def gravitational_acceleration(r, m, G=6.67430e-11):
     """
     Calculates the gravitational acceleration on a particle due to a set of masses.
-
-    Parameters:
-    r (numpy.ndarray): Array of particle positions (n, 3).
-    m (numpy.ndarray): Array of particle masses (n,).
-    G (float): Gravitational constant.
-
-    Returns:
-    numpy.ndarray: Array of accelerations (n, 3).
     """
     n = len(r)
     a = np.zeros_like(r)
-    for i in range(n):
-        for j in range(n):
-            if i != j:
-                dr = r[j] - r[i]
-                dist = np.linalg.norm(dr)
-                a[i] += -G * m[j] * dr / (dist ** 3)
+
+    # Use multiprocessing to parallelize the acceleration calculation
+    num_processes = mp.cpu_count()
+    chunk_size = n // num_processes
+
+    ctx = mp.get_context("spawn")
+    with ctx.Pool() as pool:
+        args = [(r, m, i * chunk_size, (i + 1) * chunk_size, G) for i in range(num_processes)]
+        results = pool.map(calculate_acceleration_chunk, args)
+
+    for i, res in enumerate(results):
+        a[i * chunk_size:(i + 1) * chunk_size] = res
+
     return a
 
 def leapfrog_galaxy(r0, v0, m, G, t0, t_end, dt):
     """
     Simulates the evolution of a galaxy using the Leapfrog integration method.
-
-    Parameters:
-    r0 (numpy.ndarray): Initial positions of particles (n, 3).
-    v0 (numpy.ndarray): Initial velocities of particles (n, 3).
-    m (numpy.ndarray): Masses of particles (n,).
-    G (float): Gravitational constant.
-    t0 (float): Initial time.
-    t_end (float): Final time.
-    dt (float): Time step.
-
-    Returns:
-    numpy.ndarray: Array of particle positions (n, 3, num_steps).
-    numpy.ndarray: Array of particle velocities (n, 3, num_steps).
-    numpy.ndarray: Array of times (num_steps,).
-
     """
     num_steps = int((t_end - t0) / dt)
     n = len(r0)
@@ -63,7 +62,7 @@ def leapfrog_galaxy(r0, v0, m, G, t0, t_end, dt):
 
 # Example usage
 # Initialize galaxy parameters
-n_particles = 100
+n_particles = 1000
 r0 = np.random.uniform(-1e12, 1e12, (n_particles, 3))
 v0 = np.random.uniform(-1e5, 1e5, (n_particles, 3))
 m = np.random.uniform(1e30, 1e32, n_particles)
