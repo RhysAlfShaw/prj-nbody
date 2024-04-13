@@ -9,6 +9,7 @@ The languages we will be using are:
 - Python
 - Julia
 - Fortran
+- cython
 - Rust?
 
 ## The Nbody problem

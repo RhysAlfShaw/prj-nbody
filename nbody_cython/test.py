@@ -1,0 +1,2 @@
+from nbody import Simulation
+

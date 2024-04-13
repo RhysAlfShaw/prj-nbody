@@ -1,1 +1,7 @@
 *.ipynb
+__pycache__/
+build/
+*html
+*.so
+.DS_Store
+*.mp4
