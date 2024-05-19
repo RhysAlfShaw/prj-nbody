@@ -12,7 +12,9 @@ def calculate_acceleration(X, Y, Z, Mass, G, num_bodies, i):
             ax += -G * Mass[j] * (X[i] - X[j]) / (r ** 3)
             ay += -G * Mass[j] * (Y[i] - Y[j]) / (r ** 3)
             az += -G * Mass[j] * (Z[i] - Z[j]) / (r ** 3)
+
     return np.float64(ax), np.float64(ay), np.float64(az)
+
 
 class Simulation:
 
@@ -59,18 +61,15 @@ class Simulation:
         Performs a leapfrog integration step for a single body.
         """
         ax, ay, az = self.calculate_acceleration(i)
-        #print(ax, ay, az)
-        # Update the velocities
+
         self.Vx[i] += ax * self.dt / 2
         self.Vy[i] += ay * self.dt / 2
         self.Vz[i] += az * self.dt / 2
 
-        # Update the positions
         self.X[i] += self.Vx[i] * self.dt
         self.Y[i] += self.Vy[i] * self.dt
         self.Z[i] += self.Vz[i] * self.dt
 
-        # Update the velocities again
         ax, ay, az = self.calculate_acceleration(i)
         self.Vx[i] += ax * self.dt / 2
         self.Vy[i] += ay * self.dt / 2

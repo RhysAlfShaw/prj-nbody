@@ -5,3 +5,5 @@ build/
 *.so
 .DS_Store
 *.mp4
+nbody_cython/*.html
+nbody_cython/nbody.cpp
