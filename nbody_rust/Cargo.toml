@@ -1,0 +1,14 @@
+[package]
+name = "rust2py"
+version = "0.1.0"
+edition = "2018"
+
+[lib]
+name = "rust2pyn"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 =version = "0.21.2"
+
+[build-dependencies]
+maturin = "1.5.1"
