@@ -1,4 +1,5 @@
 [package]
+<<<<<<< HEAD
 name = "nbody_rust"
 version = "0.1.0"
 edition = "2021"
@@ -21,3 +22,18 @@ camera_controllers = "0.23.0"
 rand = "0.3.14"
 shader_version = "0.3.0"
 csv = "1.0.0-beta.3"
+=======
+name = "rust2py"
+version = "0.1.0"
+edition = "2018"
+
+[lib]
+name = "rust2pyn"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 =version = "0.21.2"
+
+[build-dependencies]
+maturin = "1.5.1"
+>>>>>>> 86ba608834cee2aadc03ee035a49576d0a2d7b12

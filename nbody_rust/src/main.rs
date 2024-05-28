@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Each `step` is a DAY (3600 seconds * 24 hours)
 extern crate find_folder;
 extern crate piston_window;
@@ -311,4 +312,25 @@ fn test_add_force() {
         Force { x: 1.0, y: 0.0 } + Force { x: 2.0, y: 3.0 },
         Force { x: 3.0, y: 3.0 }
     );
+=======
+extern crate pyo3;
+
+use pyo3::{Python, PyDict, PyResult};
+
+fn main() {
+    let gil = Python::acquire_gil();
+    hello(gil.python()).unwrap();
+}
+
+fn hello(py: Python) -> PyResult<()> {
+    let sys = py.import("sys")?;
+    let version: String = sys.get("version")?.extract()?;
+
+    let locals = PyDict::new(py);
+    locals.set_item("os", py.import("os")?)?;
+    let user: String = py.eval("os.getenv('USER') or os.getenv('USERNAME')", None, Some(&locals))?.extract()?;
+
+    println!("Hello {}, I'm Python {}", user, version);
+    Ok(())
+>>>>>>> 86ba608834cee2aadc03ee035a49576d0a2d7b12
 }

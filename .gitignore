@@ -7,6 +7,7 @@ build/
 *.mp4
 nbody_cython/*.html
 nbody_cython/nbody.cpp
+<<<<<<< HEAD
 *target/
 *.lock
 nbody_cpp/nbody
@@ -15,3 +16,7 @@ nbody_cpp/output.txt
 nbody_cpp/wrapper.py
 nbody_cython/nbody.cpp
 nbody_cython/nbody.cpp
+=======
+nbody_rust/target/*
+nbody_rust/Cargo.lock
+>>>>>>> 86ba608834cee2aadc03ee035a49576d0a2d7b12
