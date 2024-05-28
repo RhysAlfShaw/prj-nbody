@@ -7,3 +7,5 @@ build/
 *.mp4
 nbody_cython/*.html
 nbody_cython/nbody.cpp
+*target/
+*.lock
