@@ -9,3 +9,9 @@ nbody_cython/*.html
 nbody_cython/nbody.cpp
 *target/
 *.lock
+nbody_cpp/nbody
+.vscode/settings.json
+nbody_cpp/output.txt
+nbody_cpp/wrapper.py
+nbody_cython/nbody.cpp
+nbody_cython/nbody.cpp
